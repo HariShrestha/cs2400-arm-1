@@ -8,4 +8,4 @@
 		;		Your code here
 		
 chars	DCD		'a', 'B', '5', 'q', '0', 'O', '1', 's', 'b', 'i', 'G'
-caps	FILL		4
+caps	FILL		4 
