@@ -8,6 +8,22 @@
 		;		Indicate if there was a high-bit carry using the provided "fill" word.
 		
 		;		Your code here
+		ADR		R0, numbers
+		LDR		R1, [R0]     ;LOW ORDER MULTIPICANT
+		LDR		R2, [R0, #4] ; MULTIPYER
+		MOV		R5, #0       ;  RESULT
+		LSRS		R2, R2, #1   ; RIGHT SHIFT MULTIPLYER INTO CARRY FLAG
+		ADR		R6, result
+		
+		
+loop		ADDCS	R5, R5, R1 ;ADD IF CARRY IS SET
+		LSL		R1, R1, #1 ; LEFT SHIFT THE MULTIPLICANT BY 1 EACH TIME EVEN IF IT IS 0 MULTIPLYER
+		LSRS		R2, R2, #1 ; RIGHT SHIFT MULTIPLYER UNTIL IT BECOMES 0
+		BNE		loop
+		MOV		R6, R5     ; Store the multiplication result
+		
+		
+DONE
 		
 numbers	DCD		0b1100101010010001, 0b1111010101000011
 result	FILL		4
