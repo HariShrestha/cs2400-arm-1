@@ -9,25 +9,41 @@
 		ADR		R1, chars   ; Adding data into register
 		ADR		R2, caps    ; Adding memory address to register R2
 		MOV		R8, #11     ; Length of array
-		ADR		R3, upper
-		ADR		R4, lower
-		sub		R5, R4, R3
-		MOV		R9, #0
-		ADR		R6, last
+		ADR		R10, 'A'
+		ADR		R4, 'a'
+		sub		R5, R4, R10
+		MOV		R9, #0      ; COUNT FOR CAPITALIZATION
+		ADR		R6, 'Z'
 		
 loop
 		LDR		R3, [R1]
-		CMP		R3, R6
-		SUBGT	R3, R3, R5 ; if R3>R6 , R3 = R3 -R5
-		ADDGT	R9, R9, #1 ; if R3>R6, R9 = R9 + 1
-		STR		R3,[R1], #8
+		CMP		R6, R3
+		BMI		CONV
+		CMP		R3, R10
+		BMI		INTG
+		STR		R3,[R1], #4
 		SUBS		R8, R8, #1
 		
 		BNE		loop
-		MOV		R2, R9
+		MOV		R2, R9 ; R2 store number of converson
 		
 		
 		END
+CONV
+		SUB		R3, R3, R5 ; if R3>R6 , R3 = R3 -R5
+		ADD		R9, R9, #1 ; if R3>R6, R9 = R9 + 1
+		STR		R9, [R2]
+		STR		R3,[R1], #4
+		SUBS		R8, R8, #1  ; count number of converson
+		
+		
+		BNE		loop
+		
+INTG		STR		R3,[R1], #4   ; if integer save as is
+		str		R3, [R2]      ; STORE IN CAP
+		SUBS		R8, R8, #1
+		BNE		loop
+		
 		
 		
 		
@@ -37,6 +53,3 @@ loop
 		
 chars	DCD		'a', 'B', '5', 'q', '0', 'O', '1', 's', 'b', 'i', 'G'
 caps		FILL		4
-upper	DCD		'A'
-lower	DCD		'a'
-last		DCD		'Z'
