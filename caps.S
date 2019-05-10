@@ -12,7 +12,8 @@
 		ADR		R10, 'A'
 		ADR		R4, 'a'
 		sub		R5, R4, R10
-		MOV		R9, #0      ; COUNT FOR CAPITALIZATION
+		
+		MOV		R9, #0
 		ADR		R6, 'Z'
 		
 loop
@@ -23,7 +24,6 @@ loop
 		BMI		INTG
 		STR		R3,[R1], #4
 		SUBS		R8, R8, #1
-		
 		BNE		loop
 		MOV		R2, R9 ; R2 store number of converson
 		
@@ -32,7 +32,8 @@ loop
 CONV
 		SUB		R3, R3, R5 ; if R3>R6 , R3 = R3 -R5
 		ADD		R9, R9, #1 ; if R3>R6, R9 = R9 + 1
-		STR		R9, [R2]
+		
+		STR		R9, [R2]    ; store the cap number
 		STR		R3,[R1], #4
 		SUBS		R8, R8, #1  ; count number of converson
 		
@@ -40,7 +41,7 @@ CONV
 		BNE		loop
 		
 INTG		STR		R3,[R1], #4   ; if integer save as is
-		str		R3, [R2]      ; STORE IN CAP
+		
 		SUBS		R8, R8, #1
 		BNE		loop
 		

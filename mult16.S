@@ -7,6 +7,24 @@
 		;		Indicate if there was a high-bit carry using the provided "fill" word.
 		
 		;		Your code here
+		ADR		R0, numbers
+		LDR		R1, [R0]     ;LOW ORDER MULTIPICANT
+		LDR		R2, [R0, #4] ; MULTIPYER
+		ADD		R2, R2, #65536 ; LAST FROM THE RIGHT WILL SET Z AND C FLAG AND NOT ADDED SO THIS IS FOR THAT
+		MOV		R5, #0       ;  RESULT
+		LSRS		R2, R2, #1   ; RIGHT SHIFT MULTIPLYER INTO CARRY FLAG
+		ADR		R6, result
+		
+		
+loop		ADDCS	R5, R5, R1 ;ADD IF CARRY IS SET
+		LSL		R1, R1, #1 ; LEFT SHIFT THE MULTIPLICANT BY 1 EACH TIME EVEN IF IT IS 0 MULTIPLYER
+		LSRS		R2, R2, #1 ; RIGHT SHIFT MULTIPLYER UNTIL IT BECOMES 0
+		BNE		loop
+		STR		R5, [R6]
+		END
+		
+		
+DONE
 		
 		ADR		r0, numbers
 		ADR		r1, mask
